@@ -1,6 +1,7 @@
-opendir($dh, ".");
 $nonce = "";
-while(readdir($dh))
+opendir($dh, ".");
+@sorted = sort {$b<=>$a} (readdir($dh));
+while($_ = shift @sorted)
 {
 	unless(/\.md/) { next; }
 	if(/README/) { next; }
@@ -10,6 +11,7 @@ while(readdir($dh))
 	while(<RH>)
 	{
 		chomp;
+    s/\s\s/\s/g;
 		print $_ . " ";
 	}
 	print "\n\n";
